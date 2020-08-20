@@ -2435,6 +2435,8 @@ input, select, textarea {
 	input[type="reset"],
 	input[type="button"],
 	.button {
+		position:absolute;
+                right:0;
 		-moz-appearance: none;
 		-webkit-appearance: none;
 		-ms-appearance: none;
@@ -2450,10 +2452,10 @@ input, select, textarea {
 		cursor: pointer;
 		display: inline-block;
 		font-weight: 400;
-		height: 3.15em;
+		height: 3em;
 		height: calc(2.75em + 6px);
 		line-height: 2.75em;
-		min-width: 10em;
+		min-width: 8em;
 		padding: 0 1.5em;
 		text-align: center;
 		text-decoration: none;
