@@ -2435,6 +2435,8 @@ input, select, textarea {
 	input[type="reset"],
 	input[type="button"],
 	.button {
+		position: relative;
+		margin: 0 0 1.5em 0;
 		-moz-appearance: none;
 		-webkit-appearance: none;
 		-ms-appearance: none;
@@ -2446,7 +2448,7 @@ input, select, textarea {
 		background-color: transparent;
 		border-radius: 0.35em;
 		border: solid 3px #efefef;
-		color: #787878 !important;
+		color:#787878;
 		cursor: pointer;
 		display: inline-block;
 		font-weight: 400;
