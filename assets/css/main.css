@@ -2126,11 +2126,11 @@ input, select, textarea {
 		.image.fit {
 			display: block;
 			margin: 0 0 2em 0;
-			width: 100%;
+			width: 50%;
 		}
 
 			.image.fit img {
-				width: 200%;
+				width: 100%;
 			}
 
 		.image.avatar {
