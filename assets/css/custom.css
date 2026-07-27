@@ -1,13 +1,23 @@
 /* ------------------------------------------------------------------
    Custom overrides for the Strata theme.
    Loaded after main.css.
+
+   One coherent scale, rather than a pile of individual tweaks:
+
+     sidebar   23% of the window, type sized to fit it without
+               stranding single words on their own line
+     content   the remaining 77%, capped at 76em
+     headings  bold and dark, one clear step above running text
+     body      mid gray, a little larger than the theme default
+     figures   60% of the content width, so the diagrams support the
+               text instead of dominating it
    ------------------------------------------------------------------ */
 
 /* --- 1. Type scale -------------------------------------------------
    main.css sets 16pt by default and drops to 12pt below 1800px, which
-   is where almost every real screen sits. Scale each step up rather
-   than setting one global size, otherwise the small breakpoints
-   inherit a desktop size and the layout breaks.                      */
+   is where almost every real screen sits. Each step is scaled
+   individually; a single global size would override the responsive
+   base and break the small breakpoints.                              */
 
 body, input, select, textarea {
 	font-size: 17pt;
@@ -27,15 +37,16 @@ body, input, select, textarea {
 }
 
 /* --- 2. Colors and weights -----------------------------------------
-   Headings keep their dark color and are bolded; running text sits a
-   step lighter so the headings carry the page.                       */
+   Headings are dark and bold (the theme ships them at weight 400, so
+   they never actually looked bold); running text sits a step lighter
+   so the headings carry the page.                                    */
 
 body, input, select, textarea {
-	color: #5a5a5a;
+	color: #565656;
 }
 
 #main p, #main li, #main td {
-	color: #5a5a5a;
+	color: #565656;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -57,34 +68,33 @@ a:hover {
 }
 
 /* --- 3. Column geometry --------------------------------------------
-   Narrow the fixed sidebar and give the width back to the content.
-   #header width and #main margin-left must always match, and
-   main.css caps #main at 54em, which has to come up too or the extra
-   width goes nowhere.                                                */
+   #header width and #main margin-left must always match. main.css
+   also caps #main at 54em, which has to come up or the width freed by
+   the narrower sidebar goes nowhere.                                 */
 
 @media screen and (min-width: 1281px) {
 	#header {
-		width: 27%;
+		width: 23%;
 		padding: 3.5em 2em;
 	}
 
 	#main {
-		margin-left: 27%;
-		width: calc(100% - 27%);
-		max-width: 72em;
-		padding: 4em 4em 4em 4.5em;
+		margin-left: 23%;
+		width: calc(100% - 23%);
+		max-width: 76em;
+		padding: 4.5em 4em 4em 4.5em;
 	}
 }
 
 @media screen and (min-width: 981px) and (max-width: 1280px) {
 	#header {
-		width: 25%;
+		width: 26%;
 		padding: 3em 1.5em;
 	}
 
 	#main {
-		margin-left: 25%;
-		width: calc(100% - 25%);
+		margin-left: 26%;
+		width: calc(100% - 26%);
 		max-width: none;
 		padding: 4em 3em;
 	}
@@ -103,29 +113,48 @@ a:hover {
 }
 
 /* --- 4. Sidebar ----------------------------------------------------
-   Everything in the left column is scaled up. No dimming layer over
-   the background photo -- it keeps the image at full saturation, and
-   the text is kept legible with a shadow instead.                    */
+   The theme's own background (bg.jpg under a subtle overlay texture)
+   is left intact so the photo keeps its color. A light wash on top
+   takes it down a touch and seats the text; a text shadow does the
+   rest, so no heavy scrim is needed.                                 */
 
 #header {
-	color: rgba(255, 255, 255, 0.92);
-	text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85), 0 0 12px rgba(0, 0, 0, 0.55);
+	color: #ffffff;
+	text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85), 0 0 12px rgba(0, 0, 0, 0.5);
+}
+
+#header:before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: rgba(8, 14, 26, 0.2);
+	pointer-events: none;
+	z-index: 0;
+}
+
+/* Keep the content above the wash. */
+#header > * {
+	position: relative;
+	z-index: 1;
 }
 
 #header .image.avatar {
-	width: 10em;
-	margin: 0 0 1.1em 0;
+	width: 8.5em;
+	margin: 0 0 1em 0;
 }
 
 #header .image.avatar img {
-	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.45);
+	box-shadow: 0 2px 12px rgba(0, 0, 0, 0.45);
 }
 
 #header h1 {
 	color: #ffffff;
-	font-size: 1.9em;
-	line-height: 1.4em;
-	margin: 0 0 0.65em 0;
+	font-size: 1.65em;
+	line-height: 1.35em;
+	margin: 0 0 0.7em 0;
 }
 
 #header h1 strong {
@@ -133,49 +162,86 @@ a:hover {
 	font-weight: 700;
 }
 
-/* Kept just under 1em: the sidebar is narrow enough that a larger size
+/* Held just under 1em: the column is narrow enough that a larger size
    strands single words on their own line. */
 #header h5 {
 	color: #ffffff;
-	font-size: 0.95em;
+	font-size: 0.9em;
 	font-weight: 400;
-	line-height: 1.55em;
-	margin: 0 0 1.3em 0;
+	line-height: 1.5em;
+	margin: 0 0 1.15em 0;
 }
 
 #footer {
-	color: rgba(255, 255, 255, 0.92);
+	color: #ffffff;
 	text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85);
 }
 
-/* Social icons in the left column, enlarged to match. */
+/* Social icons. The theme renders these at 40% white, which reads as
+   dull gray against the photo. Instead: white glyphs on a translucent
+   disc, each lifting into its own brand color on hover. */
+#footer .icons {
+	margin: 1.25em 0 0 0;
+}
+
 #footer .icons li {
-	padding: 0 0.75em 0 0;
+	padding: 0 0.45em 0.5em 0;
 }
 
-#footer .icons li .icon:before {
-	font-size: 2.1em;
+#footer .icons a {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 2.3em;
+	height: 2.3em;
+	border-radius: 50%;
+	border-bottom: 0;
+	background: rgba(255, 255, 255, 0.16);
+	color: #ffffff;
+	text-shadow: none;
+	-moz-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, -moz-transform 0.2s ease-in-out;
+	-webkit-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, -webkit-transform 0.2s ease-in-out;
+	transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, transform 0.2s ease-in-out;
 }
 
+#footer .icons a:before {
+	font-size: 1.15em;
+	line-height: 1;
+}
+
+#footer .icons a:hover {
+	background: #ffffff;
+	-moz-transform: translateY(-2px);
+	-webkit-transform: translateY(-2px);
+	transform: translateY(-2px);
+}
+
+#footer .icons a.fa-researchgate:hover { color: #00ccbb !important; }
+#footer .icons a.fa-google:hover { color: #4285f4 !important; }
+#footer .icons a.fa-linkedin:hover { color: #0a66c2 !important; }
+#footer .icons a.fa-envelope:hover { color: #c0392b !important; }
+
+/* Stacked layout: the sidebar becomes a full-width banner, so it can
+   carry a larger photo and name. */
 @media screen and (max-width: 980px) {
 	#header .image.avatar {
-		width: 11em;
+		width: 10.5em;
 	}
 
 	#header h1 {
-		font-size: 2.25em;
+		font-size: 2.1em;
 	}
 
 	#header h5 {
-		font-size: 1.05em;
+		font-size: 1em;
 	}
 }
 
 /* --- 5. Content layout --------------------------------------------- */
 
 #main > section {
-	margin: 3em 0 0 0;
-	padding: 3em 0 0 0;
+	margin: 3.5em 0 0 0;
+	padding: 3.5em 0 0 0;
 }
 
 #main > section:first-of-type {
@@ -184,26 +250,22 @@ a:hover {
 	border-top: 0;
 }
 
-.work-item {
-	margin-bottom: 2.5em;
-}
-
-.work-item h3 {
-	font-size: 1.05em;
-	line-height: 1.45em;
-	margin: 0 0 0.6em 0;
-}
-
-.work-item .image.fit img {
-	width: 100%;
-	height: auto;
+#main h2 {
+	font-size: 1.5em;
+	line-height: 1.35em;
+	margin: 0 0 1.1em 0;
 }
 
 /* Sub-headings inside the collaboration section. */
 .subhead {
-	margin: 1.5em 0 1em 0;
+	font-size: 1.15em;
+	margin: 1.75em 0 1.1em 0;
 	padding-bottom: 0.4em;
-	border-bottom: solid 2px #e6e6e6;
+	border-bottom: solid 2px #e9e9e9;
+}
+
+.subhead:first-of-type {
+	margin-top: 0;
 }
 
 /* Long DOI URLs must not push the layout sideways. */
@@ -212,36 +274,78 @@ a:hover {
 	word-wrap: break-word;
 }
 
-/* --- 6. References -------------------------------------------------
-   Citations follow the CV: author list, year, title, italic journal,
-   volume/pages, then the DOI. The author's own name is highlighted.  */
+/* --- 6. Publication entries ----------------------------------------
+   Each entry reads title -> figure -> reference, with a hairline
+   accent down the side so a section scans as a list of papers rather
+   than one long column of text.                                      */
 
+.work-item {
+	margin-bottom: 2.5em;
+	padding-left: 1.25em;
+	border-left: solid 3px #ececec;
+	-moz-transition: border-color 0.2s ease-in-out;
+	-webkit-transition: border-color 0.2s ease-in-out;
+	transition: border-color 0.2s ease-in-out;
+}
+
+.work-item:hover {
+	border-left-color: #c8d8e8;
+}
+
+.work-item h3 {
+	font-size: 1.15em;
+	line-height: 1.4em;
+	margin: 0 0 0.7em 0;
+}
+
+/* Figures run at 60% of the content width -- at full bleed the
+   diagrams overwhelmed the text. They return to full width once the
+   layout stacks, where 60% would be unreadably small. */
+.work-item .image.fit {
+	display: block;
+	max-width: 60%;
+	margin: 0 0 1.1em 0;
+}
+
+.work-item .image.fit img {
+	width: 100%;
+	height: auto;
+	border-radius: 3px;
+}
+
+/* main.css sets `.work-item p { font-size: 0.8em }`, which outranks a
+   bare `.citation` on specificity -- the reference text was rendering
+   two steps smaller than intended. Qualifying with .work-item wins it
+   back. */
+.work-item .citation,
+.work-item .conference,
+.work-item .media,
 .citation,
 .conference,
 .media,
 .note {
-	font-size: 0.9em;
-	line-height: 1.6em;
-	margin: 0 0 0.6em 0;
+	font-size: 1em;
+	line-height: 1.65em;
+	margin: 0 0 0.7em 0;
+}
+
+.work-item .conference,
+.work-item .media,
+.note {
+	font-size: 0.92em;
+	color: #6d6d6d;
 }
 
 .work-item p:last-child {
 	margin-bottom: 0;
 }
 
+/* The author's own name, highlighted throughout the reference lists. */
 .me {
 	color: #1a1a1a;
 	font-weight: 700;
 	background: linear-gradient(transparent 62%, rgba(0, 105, 191, 0.18) 62%);
 	padding: 0 0.08em;
-}
-
-.conference {
-	color: #6b6b6b;
-}
-
-.media {
-	color: #6b6b6b;
 }
 
 .media-label {
@@ -250,14 +354,23 @@ a:hover {
 }
 
 .note {
-	color: #6b6b6b;
 	font-style: italic;
-	border-left: solid 3px #e6e6e6;
+	border-left: solid 3px #ececec;
 	padding-left: 1em;
 }
 
 .note .me {
 	font-style: normal;
+}
+
+@media screen and (max-width: 736px) {
+	.work-item {
+		padding-left: 1em;
+	}
+
+	.work-item .image.fit {
+		max-width: 100%;
+	}
 }
 
 /* --- 7. Visitor map ------------------------------------------------ */
@@ -268,6 +381,7 @@ a:hover {
 }
 
 #visitor-map-wrapper h3 {
+	font-size: 1.15em;
 	margin-bottom: 1em;
 }
 
@@ -284,4 +398,8 @@ a:hover {
 #visitor-map > div {
 	max-width: 100% !important;
 	margin: 0 auto;
+}
+
+#visitor-map a {
+	border-bottom: 0;
 }
