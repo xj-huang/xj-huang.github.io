@@ -1,0 +1,14 @@
+There are two code snippets below. The first method is based on javascript and it's recommended for most users:
+
+Copy
+<script type="text/javascript" id="mapmyvisitors" src="//mapmyvisitors.com/map.js?d=ECO1_BsX4_3m2g7UzZTfS9gEN_ufvAprImCz-sCPHks&cl=ffffff&w=a"></script>
+Unfortunately some blogging platforms don't support javascript (Livejournal, Google Sites). In this case the only available option is plain image embed code:
+
+Copy
+<a href="https://mapmyvisitors.com/web/1c6x1" title="Visit tracker"><img src="https://mapmyvisitors.com/map.png?d=ECO1_BsX4_3m2g7UzZTfS9gEN_ufvAprImCz-sCPHks&cl=ffffff"></a>
+Important note: Сode must be placed into the body section of your html between <body> and </body> tags. Please do NOT place it into the header.
+
+Your website statistics will appear at the https://mapmyvisitors.com/web/1c6x1 upon successful install of the tracking code
+
+Preview Customize widget
+© Mapmyvisitors.com
