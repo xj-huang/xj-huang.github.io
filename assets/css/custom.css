@@ -1,11 +1,6 @@
 /* ------------------------------------------------------------------
    Custom overrides for the Strata theme.
    Loaded after main.css.
-
-   Goals:
-     1. Slightly larger type at every breakpoint.
-     2. Darker (less washed-out) grays.
-     3. Layout fixes so the fixed sidebar and the content grid behave.
    ------------------------------------------------------------------ */
 
 /* --- 1. Type scale -------------------------------------------------
@@ -31,32 +26,26 @@ body, input, select, textarea {
 	}
 }
 
-/* Citation paragraphs inside work items are 0.8em in the theme --
-   too small once they carry most of the page's information. */
-.work-item p {
-	font-size: 0.9em;
-	line-height: 1.65em;
-}
-
-/* --- 2. Colors -----------------------------------------------------
-   Theme defaults are #a2a2a2 body text and #787878 headings, both of
-   which are very light on white. */
+/* --- 2. Colors and weights -----------------------------------------
+   Headings keep their dark color and are bolded; running text sits a
+   step lighter so the headings carry the page.                       */
 
 body, input, select, textarea {
-	color: #3f3f3f;
+	color: #5a5a5a;
+}
+
+#main p, #main li, #main td {
+	color: #5a5a5a;
 }
 
 h1, h2, h3, h4, h5, h6 {
 	color: #222222;
+	font-weight: 700;
 }
 
 strong, b {
-	color: #222222;
-	font-weight: 600;
-}
-
-#main p, #main li, #main td {
-	color: #3f3f3f;
+	color: #333333;
+	font-weight: 700;
 }
 
 a {
@@ -67,52 +56,45 @@ a:hover {
 	color: #0073d1 !important;
 }
 
-/* The sidebar sits on a busy thermal image with light patches, so white
-   text needs a scrim behind it rather than a darker color. */
-#header {
-	color: rgba(255, 255, 255, 0.85);
+/* --- 3. Column geometry --------------------------------------------
+   Narrow the fixed sidebar and give the width back to the content.
+   #header width and #main margin-left must always match, and
+   main.css caps #main at 54em, which has to come up too or the extra
+   width goes nowhere.                                                */
+
+@media screen and (min-width: 1281px) {
+	#header {
+		width: 27%;
+		padding: 3.5em 2em;
+	}
+
+	#main {
+		margin-left: 27%;
+		width: calc(100% - 27%);
+		max-width: 72em;
+		padding: 4em 4em 4em 4.5em;
+	}
 }
 
-#header:before {
-	content: '';
-	position: absolute;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	background: rgba(20, 24, 32, 0.45);
-	pointer-events: none;
-	z-index: 0;
+@media screen and (min-width: 981px) and (max-width: 1280px) {
+	#header {
+		width: 25%;
+		padding: 3em 1.5em;
+	}
+
+	#main {
+		margin-left: 25%;
+		width: calc(100% - 25%);
+		max-width: none;
+		padding: 4em 3em;
+	}
 }
 
-#header > * {
-	position: relative;
-	z-index: 1;
-}
-
-#header h1 {
-	color: #ffffff;
-}
-
-#header h5 {
-	color: rgba(255, 255, 255, 0.85);
-	font-size: 0.85em;
-	line-height: 1.6em;
-	margin: 0 0 1.25em 0;
-}
-
-#footer {
-	color: rgba(255, 255, 255, 0.8);
-}
-
-/* --- 3. Layout fixes ---------------------------------------------- */
-
-/* The sidebar is position: fixed with height: 100%. On short windows
-   (or once the fonts grow) its content overflowed and was clipped. */
+/* The sidebar is position: fixed with height: 100%, so its content
+   has to be able to scroll on short windows or it gets clipped. */
 @media screen and (min-width: 981px) {
 	#header {
 		overflow-y: auto;
-		padding: 4em 3em;
 	}
 
 	#header > .inner {
@@ -120,7 +102,77 @@ a:hover {
 	}
 }
 
-/* Section spacing: give each research block clear separation. */
+/* --- 4. Sidebar ----------------------------------------------------
+   Everything in the left column is scaled up. No dimming layer over
+   the background photo -- it keeps the image at full saturation, and
+   the text is kept legible with a shadow instead.                    */
+
+#header {
+	color: rgba(255, 255, 255, 0.92);
+	text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85), 0 0 12px rgba(0, 0, 0, 0.55);
+}
+
+#header .image.avatar {
+	width: 10em;
+	margin: 0 0 1.1em 0;
+}
+
+#header .image.avatar img {
+	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.45);
+}
+
+#header h1 {
+	color: #ffffff;
+	font-size: 1.9em;
+	line-height: 1.4em;
+	margin: 0 0 0.65em 0;
+}
+
+#header h1 strong {
+	color: #ffffff;
+	font-weight: 700;
+}
+
+/* Kept just under 1em: the sidebar is narrow enough that a larger size
+   strands single words on their own line. */
+#header h5 {
+	color: #ffffff;
+	font-size: 0.95em;
+	font-weight: 400;
+	line-height: 1.55em;
+	margin: 0 0 1.3em 0;
+}
+
+#footer {
+	color: rgba(255, 255, 255, 0.92);
+	text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85);
+}
+
+/* Social icons in the left column, enlarged to match. */
+#footer .icons li {
+	padding: 0 0.75em 0 0;
+}
+
+#footer .icons li .icon:before {
+	font-size: 2.1em;
+}
+
+@media screen and (max-width: 980px) {
+	#header .image.avatar {
+		width: 11em;
+	}
+
+	#header h1 {
+		font-size: 2.25em;
+	}
+
+	#header h5 {
+		font-size: 1.05em;
+	}
+}
+
+/* --- 5. Content layout --------------------------------------------- */
+
 #main > section {
 	margin: 3em 0 0 0;
 	padding: 3em 0 0 0;
@@ -132,7 +184,6 @@ a:hover {
 	border-top: 0;
 }
 
-/* Work items: keep the thumbnail and its caption locked together. */
 .work-item {
 	margin-bottom: 2.5em;
 }
@@ -141,10 +192,6 @@ a:hover {
 	font-size: 1.05em;
 	line-height: 1.45em;
 	margin: 0 0 0.6em 0;
-}
-
-.work-item p + p {
-	margin-top: 0.75em;
 }
 
 .work-item .image.fit img {
@@ -159,39 +206,82 @@ a:hover {
 	border-bottom: solid 2px #e6e6e6;
 }
 
-/* Long DOI / journal URLs must not push the layout sideways. */
+/* Long DOI URLs must not push the layout sideways. */
 #main a {
 	overflow-wrap: break-word;
 	word-wrap: break-word;
 }
 
-/* --- 4. Visitor map ------------------------------------------------ */
+/* --- 6. References -------------------------------------------------
+   Citations follow the CV: author list, year, title, italic journal,
+   volume/pages, then the DOI. The author's own name is highlighted.  */
 
-#clustrmaps-wrapper {
+.citation,
+.conference,
+.media,
+.note {
+	font-size: 0.9em;
+	line-height: 1.6em;
+	margin: 0 0 0.6em 0;
+}
+
+.work-item p:last-child {
+	margin-bottom: 0;
+}
+
+.me {
+	color: #1a1a1a;
+	font-weight: 700;
+	background: linear-gradient(transparent 62%, rgba(0, 105, 191, 0.18) 62%);
+	padding: 0 0.08em;
+}
+
+.conference {
+	color: #6b6b6b;
+}
+
+.media {
+	color: #6b6b6b;
+}
+
+.media-label {
+	color: #444444;
+	font-weight: 700;
+}
+
+.note {
+	color: #6b6b6b;
+	font-style: italic;
+	border-left: solid 3px #e6e6e6;
+	padding-left: 1em;
+}
+
+.note .me {
+	font-style: normal;
+}
+
+/* --- 7. Visitor map ------------------------------------------------ */
+
+#visitor-map-wrapper {
 	margin-top: 2.5em;
 	text-align: center;
 }
 
-#clustrmaps-wrapper h3 {
+#visitor-map-wrapper h3 {
 	margin-bottom: 1em;
 }
 
-#clustrmaps-widget {
+#visitor-map {
 	display: block;
 	margin: 0 auto;
 	max-width: 100%;
-	min-height: 60px;
 	overflow: hidden;
 }
 
-#clustrmaps-widget img,
-#clustrmaps-widget iframe,
-#clustrmaps-widget canvas,
-#clustrmaps-widget > div {
+#visitor-map img,
+#visitor-map iframe,
+#visitor-map canvas,
+#visitor-map > div {
 	max-width: 100% !important;
 	margin: 0 auto;
-}
-
-.small {
-	font-size: 0.85em;
 }
