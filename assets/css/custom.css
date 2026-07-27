@@ -2,41 +2,84 @@
    Custom overrides for the Strata theme.
    Loaded after main.css.
 
-   One coherent scale, rather than a pile of individual tweaks:
+   THE TYPE SCALE IS DEFINED PER BREAKPOINT, ON PURPOSE.
 
-     sidebar   23% of the window, type sized to fit it without
-               stranding single words on their own line
-     content   the remaining 77%, capped at 76em
-     headings  bold and dark, one clear step above running text
-     body      mid gray, a little larger than the theme default
-     figures   60% of the content width, so the diagrams support the
-               text instead of dominating it
+   Everything here is sized in em, relative to the body font size,
+   which main.css changes at each breakpoint. So a single flat value
+   like `h3 { font-size: 1.15em }` does NOT stay visually consistent:
+   it renders small on a wide desktop and oversized on a phone, where
+   the same proportion occupies far more of the screen.
+
+   The fix is to set the base size AND the heading steps at each
+   breakpoint, so the relationship between them is deliberate at every
+   width instead of inherited by accident. All heading sizes live in
+   section 2 -- change them there, not scattered through the file.
    ------------------------------------------------------------------ */
 
-/* --- 1. Type scale -------------------------------------------------
-   main.css sets 16pt by default and drops to 12pt below 1800px, which
-   is where almost every real screen sits. Each step is scaled
-   individually; a single global size would override the responsive
-   base and break the small breakpoints.                              */
+/* --- 1. Base size per breakpoint ----------------------------------- */
 
 body, input, select, textarea {
-	font-size: 17pt;
+	font-size: 17pt;			/* > 1800px */
 	line-height: 1.7em;
 }
 
 @media screen and (max-width: 1800px) {
 	body, input, select, textarea {
-		font-size: 13.5pt;
+		font-size: 13.5pt;		/* laptops and desktops */
+	}
+}
+
+@media screen and (max-width: 980px) {
+	body, input, select, textarea {
+		font-size: 12.5pt;		/* tablet, stacked layout */
 	}
 }
 
 @media screen and (max-width: 736px) {
 	body, input, select, textarea {
-		font-size: 13pt;
+		font-size: 11.5pt;		/* phone -- the base has to come down
+								   here or every em-sized heading above
+								   it renders oversized */
 	}
 }
 
-/* --- 2. Colors and weights -----------------------------------------
+/* --- 2. Heading steps per breakpoint -------------------------------
+   Desktop gets the largest steps because there is room for them; the
+   phone gets smaller steps because the screen is narrow. This is what
+   keeps the two looking like the same design.                        */
+
+/* Desktop and laptop */
+@media screen and (min-width: 981px) {
+	#main h2 { font-size: 1.6em; }
+	.work-item h3 { font-size: 1.35em; }
+	.subhead { font-size: 1.2em; }
+}
+
+/* Tablet */
+@media screen and (min-width: 737px) and (max-width: 980px) {
+	#main h2 { font-size: 1.45em; }
+	.work-item h3 { font-size: 1.25em; }
+	.subhead { font-size: 1.15em; }
+}
+
+/* Phone */
+@media screen and (max-width: 736px) {
+	#main h2 { font-size: 1.35em; }
+	.work-item h3 { font-size: 1.18em; }
+	.subhead { font-size: 1.1em; }
+}
+
+#main h2 {
+	line-height: 1.35em;
+	margin: 0 0 1.1em 0;
+}
+
+.work-item h3 {
+	line-height: 1.4em;
+	margin: 0 0 0.7em 0;
+}
+
+/* --- 3. Colors and weights -----------------------------------------
    Headings are dark and bold (the theme ships them at weight 400, so
    they never actually looked bold); running text sits a step lighter
    so the headings carry the page.                                    */
@@ -67,7 +110,7 @@ a:hover {
 	color: #0073d1 !important;
 }
 
-/* --- 3. Column geometry --------------------------------------------
+/* --- 4. Column geometry --------------------------------------------
    #header width and #main margin-left must always match. main.css
    also caps #main at 54em, which has to come up or the width freed by
    the narrower sidebar goes nowhere.                                 */
@@ -112,13 +155,20 @@ a:hover {
 	}
 }
 
-/* --- 4. Sidebar ----------------------------------------------------
-   The theme's own background (bg.jpg under a subtle overlay texture)
-   is left intact so the photo keeps its color. A light wash on top
-   takes it down a touch and seats the text; a text shadow does the
-   rest, so no heavy scrim is needed.                                 */
+/* --- 5. Sidebar ----------------------------------------------------
+   bg.jpg is 582x867. The theme sizes it at `150%` of the sidebar
+   width, which works out to roughly 740px tall in a 900px-high
+   window, leaving a band of the #1f1815 base color -- read as black --
+   across the bottom of the column, behind the social icons. `cover`
+   scales it to fill the sidebar at any window height.
+
+   A light wash on top takes the photo down a touch and seats the
+   text; a text shadow does the rest, so no heavy scrim is needed.    */
 
 #header {
+	background-size: auto, cover;
+	background-position: top left, center center;
+	background-repeat: repeat, no-repeat;
 	color: #ffffff;
 	text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85), 0 0 12px rgba(0, 0, 0, 0.5);
 }
@@ -178,8 +228,8 @@ a:hover {
 }
 
 /* Social icons. The theme renders these at 40% white, which reads as
-   dull gray against the photo. Instead: white glyphs on a translucent
-   disc, each lifting into its own brand color on hover. */
+   dull gray against the photo. Instead: white glyphs on translucent
+   discs, each taking its brand color on hover. */
 #footer .icons {
 	margin: 1.25em 0 0 0;
 }
@@ -237,7 +287,7 @@ a:hover {
 	}
 }
 
-/* --- 5. Content layout --------------------------------------------- */
+/* --- 6. Content layout --------------------------------------------- */
 
 #main > section {
 	margin: 3.5em 0 0 0;
@@ -250,16 +300,10 @@ a:hover {
 	border-top: 0;
 }
 
-#main h2 {
-	font-size: 1.5em;
-	line-height: 1.35em;
-	margin: 0 0 1.1em 0;
-}
-
-/* Sub-headings inside the collaboration section. */
+/* Sub-headings inside the collaboration section. Indented a step so
+   the theme heading above them stays the outermost level. */
 .subhead {
-	font-size: 1.15em;
-	margin: 1.75em 0 1.1em 0;
+	margin: 2em 0 1.25em 1.25em;
 	padding-bottom: 0.4em;
 	border-bottom: solid 2px #e9e9e9;
 }
@@ -274,14 +318,16 @@ a:hover {
 	word-wrap: break-word;
 }
 
-/* --- 6. Publication entries ----------------------------------------
-   Each entry reads title -> figure -> reference, with a hairline
-   accent down the side so a section scans as a list of papers rather
-   than one long column of text.                                      */
+/* --- 7. Publication entries ----------------------------------------
+   Each entry reads title -> figure -> reference. The whole block is
+   indented under its research-theme heading and capped at a single
+   width, so the figure and every line of text share one left and one
+   right edge.                                                        */
 
 .work-item {
-	margin-bottom: 2.5em;
-	padding-left: 1.25em;
+	max-width: 34em;
+	margin: 0 0 3.25em 0;
+	padding-left: 1.5em;
 	border-left: solid 3px #ececec;
 	-moz-transition: border-color 0.2s ease-in-out;
 	-webkit-transition: border-color 0.2s ease-in-out;
@@ -292,18 +338,18 @@ a:hover {
 	border-left-color: #c8d8e8;
 }
 
-.work-item h3 {
-	font-size: 1.15em;
-	line-height: 1.4em;
-	margin: 0 0 0.7em 0;
+/* The indent that nests entries under their theme heading. It is on
+   the row rather than the item so the item's own max-width still
+   measures the text column itself. */
+#main .row {
+	padding-left: 2.25em;
 }
 
-/* Figures run at 60% of the content width -- at full bleed the
-   diagrams overwhelmed the text. They return to full width once the
-   layout stacks, where 60% would be unreadably small. */
+/* Figure and text share the block width exactly. */
 .work-item .image.fit {
 	display: block;
-	max-width: 60%;
+	width: 100%;
+	max-width: 100%;
 	margin: 0 0 1.1em 0;
 }
 
@@ -363,43 +409,75 @@ a:hover {
 	font-style: normal;
 }
 
+/* Stacked layout: drop the indent, which would eat the usable width. */
 @media screen and (max-width: 736px) {
-	.work-item {
-		padding-left: 1em;
+	#main .row {
+		padding-left: 0;
 	}
 
-	.work-item .image.fit {
-		max-width: 100%;
+	.work-item {
+		max-width: none;
+		padding-left: 1em;
+		margin-bottom: 2.75em;
+	}
+
+	.subhead {
+		margin-left: 0;
 	}
 }
 
-/* --- 7. Visitor map ------------------------------------------------ */
+/* --- 8. Visitor map ------------------------------------------------
+   Matched to the publication blocks: same indent, same width. The
+   transparent left border mirrors the accent rule on a .work-item so
+   the map's content box lines up with the figures exactly.           */
+
+/* `hidden` must beat the theme's `.row { display: flex }`, which would
+   otherwise override the UA rule and show the block regardless. */
+[hidden] {
+	display: none !important;
+}
 
 #visitor-map-wrapper {
-	margin-top: 2.5em;
-	text-align: center;
+	margin-top: 2.75em;
 }
 
-#visitor-map-wrapper h3 {
-	font-size: 1.15em;
-	margin-bottom: 1em;
+/* No accent rule on the map -- it is not a publication. */
+.visitor-map-item,
+.visitor-map-item:hover {
+	border-left-color: transparent;
 }
 
 #visitor-map {
 	display: block;
-	margin: 0 auto;
-	max-width: 100%;
+	width: 100%;
 	overflow: hidden;
 }
 
-#visitor-map img,
-#visitor-map iframe,
-#visitor-map canvas,
-#visitor-map > div {
-	max-width: 100% !important;
-	margin: 0 auto;
+#visitor-map a {
+	display: block;
+	border-bottom: 0;
 }
 
-#visitor-map a {
-	border-bottom: 0;
+/* The widget hard-codes its width inline, so these need !important.
+   The map itself is a background image on a fixed-size div; giving it
+   an aspect ratio lets it scale with the column instead of distorting.
+   2.04 is the generated image's ratio (600 x 294). */
+#visitor-map #mapmyvisitors-widget {
+	width: 100% !important;
+	max-width: 600px;
+}
+
+#visitor-map .mapmyvisitors-map {
+	width: 100% !important;
+	height: auto !important;
+	aspect-ratio: 2.04;
+	background-size: 100% 100% !important;
+}
+
+@media screen and (max-width: 736px) {
+	#visitor-map-wrapper {
+		max-width: none;
+		margin-left: 0;
+		padding-left: 1em;
+	}
 }

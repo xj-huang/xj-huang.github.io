@@ -11,7 +11,11 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="description" content="Xinjie Huang - Ph.D. candidate in Civil and Environmental Engineering at Princeton University, working on urban climate, heat stress and human health." />
 		<link rel="stylesheet" href="assets/css/main.css" />
-		<link rel="stylesheet" href="assets/css/custom.css" />
+		<!-- The ?v= is a cache buster: GitHub Pages and browsers cache CSS
+		     aggressively, which is how two different versions of the page
+		     end up being visible at once. Bump it whenever custom.css
+		     changes and every visitor gets the new file immediately. -->
+		<link rel="stylesheet" href="assets/css/custom.css?v=6" />
 		<link rel="shortcut icon" href="/favicon.ico" />
 		<link rel="bookmark" href="/favicon.ico" />
 	</head>
@@ -85,7 +89,7 @@
 								<p class="citation"><span class="me">Huang, X.</span>, Chang, J. M.-H., Shi, D., Chan, P. W., &amp; Song, J.* (2025). WRF-HEATS coupling: Incorporating human behaviors and city topography into urban heat stress evaluation. <em>Building and Environment</em>, 267, 112191. <a href="https://doi.org/10.1016/j.buildenv.2024.112191">https://doi.org/10.1016/j.buildenv.2024.112191</a></p>
 							</article>
 							<article class="col-12 col-12-xsmall work-item">
-								<h3>Urban environment-human coupling system: model development and case study</h3>
+								<h3>Realistic representation of city street-level human thermal stress via a new urban climate-human coupling system</h3>
 								<a href="images/fulls/7.jpg" class="image fit thumb"><img src="images/thumbs/7.jpg" alt="Urban environment-human coupling system" /></a>
 								<p class="citation"><span class="me">Huang, X.</span>, Song, J.*, Wang, C., &amp; Chan, P. W. (2022). Realistic representation of city street-level human thermal stress via a new urban climate-human coupling system. <em>Renewable and Sustainable Energy Reviews</em>, 169, 112919. <a href="https://doi.org/10.1016/j.rser.2022.112919">https://doi.org/10.1016/j.rser.2022.112919</a></p>
 								<p class="conference">Song, J., &amp; <span class="me">Huang, X.</span> Urban climate-human coupling system: model development and case study, <a href="https://ams.confex.com/ams/102ANNUAL/meetingapp.cgi/Paper/392692">poster presentation</a>, AMS 102nd Annual Meeting, online, Jan. 23&ndash;27, 2022.</p>
@@ -190,10 +194,19 @@
 						     registered domain -- it stays blank on localhost and file://.
 
 						     Stats dashboard: https://mapmyvisitors.com/web/1c6x1 -->
-						<div id="visitor-map-wrapper" hidden>
-							<h3>Where my visitors are from</h3>
-							<div id="visitor-map">
-								<script type="text/javascript" id="mapmyvisitors" src="https://mapmyvisitors.com/map.js?d=ECO1_BsX4_3m2g7UzZTfS9gEN_ufvAprImCz-sCPHks&amp;cl=ffffff&amp;w=a"></script>
+						<!-- Same row/column structure as a publication block, so the
+						     map lines up with the figures above by construction rather
+						     than by a hand-tuned offset (the theme's .row carries a
+						     negative grid gutter that any manual margin has to undo). -->
+						<div class="row" id="visitor-map-wrapper" hidden>
+							<div class="col-12 col-12-xsmall work-item visitor-map-item">
+								<div id="visitor-map">
+									<!-- w=600 rather than the snippet's w=a: the width is baked
+									     into a server-generated map image, and "auto" resolves to
+									     a 100px-wide one. 600 matches the figures above; the CSS
+									     scales it down on narrower screens. -->
+									<script type="text/javascript" id="mapmyvisitors" src="https://mapmyvisitors.com/map.js?d=ECO1_BsX4_3m2g7UzZTfS9gEN_ufvAprImCz-sCPHks&amp;cl=ffffff&amp;w=600"></script>
+								</div>
 							</div>
 						</div>
 
