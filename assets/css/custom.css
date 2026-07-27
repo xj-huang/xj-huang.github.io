@@ -1,20 +1,197 @@
-/* Custom overrides: increase font size slightly and darken gray text */
+/* ------------------------------------------------------------------
+   Custom overrides for the Strata theme.
+   Loaded after main.css.
 
-/* Make body text slightly larger and darker */
+   Goals:
+     1. Slightly larger type at every breakpoint.
+     2. Darker (less washed-out) grays.
+     3. Layout fixes so the fixed sidebar and the content grid behave.
+   ------------------------------------------------------------------ */
+
+/* --- 1. Type scale -------------------------------------------------
+   main.css sets 16pt by default and drops to 12pt below 1800px, which
+   is where almost every real screen sits. Scale each step up rather
+   than setting one global size, otherwise the small breakpoints
+   inherit a desktop size and the layout breaks.                      */
+
 body, input, select, textarea {
-	color: #666666; /* darker gray */
-	font-size: 17pt; /* slightly larger */
+	font-size: 17pt;
+	line-height: 1.7em;
 }
 
-/* Make headings and strong text darker */
-h1, h2, h3, h4, h5, h6, strong, b {
-	color: #444444;
+@media screen and (max-width: 1800px) {
+	body, input, select, textarea {
+		font-size: 13.5pt;
+	}
 }
 
-/* Slightly adjust heading sizes to scale better */
-h1 { font-size: 2.1em; }
-h2 { font-size: 1.6em; }
-h3 { font-size: 1.35em; }
-h4 { font-size: 1.2em; }
-h5 { font-size: 1.0em; }
-h6 { font-size: 0.85em; }
+@media screen and (max-width: 736px) {
+	body, input, select, textarea {
+		font-size: 13pt;
+	}
+}
+
+/* Citation paragraphs inside work items are 0.8em in the theme --
+   too small once they carry most of the page's information. */
+.work-item p {
+	font-size: 0.9em;
+	line-height: 1.65em;
+}
+
+/* --- 2. Colors -----------------------------------------------------
+   Theme defaults are #a2a2a2 body text and #787878 headings, both of
+   which are very light on white. */
+
+body, input, select, textarea {
+	color: #3f3f3f;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	color: #222222;
+}
+
+strong, b {
+	color: #222222;
+	font-weight: 600;
+}
+
+#main p, #main li, #main td {
+	color: #3f3f3f;
+}
+
+a {
+	color: #00539b;
+}
+
+a:hover {
+	color: #0073d1 !important;
+}
+
+/* The sidebar sits on a busy thermal image with light patches, so white
+   text needs a scrim behind it rather than a darker color. */
+#header {
+	color: rgba(255, 255, 255, 0.85);
+}
+
+#header:before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: rgba(20, 24, 32, 0.45);
+	pointer-events: none;
+	z-index: 0;
+}
+
+#header > * {
+	position: relative;
+	z-index: 1;
+}
+
+#header h1 {
+	color: #ffffff;
+}
+
+#header h5 {
+	color: rgba(255, 255, 255, 0.85);
+	font-size: 0.85em;
+	line-height: 1.6em;
+	margin: 0 0 1.25em 0;
+}
+
+#footer {
+	color: rgba(255, 255, 255, 0.8);
+}
+
+/* --- 3. Layout fixes ---------------------------------------------- */
+
+/* The sidebar is position: fixed with height: 100%. On short windows
+   (or once the fonts grow) its content overflowed and was clipped. */
+@media screen and (min-width: 981px) {
+	#header {
+		overflow-y: auto;
+		padding: 4em 3em;
+	}
+
+	#header > .inner {
+		margin-bottom: 1em;
+	}
+}
+
+/* Section spacing: give each research block clear separation. */
+#main > section {
+	margin: 3em 0 0 0;
+	padding: 3em 0 0 0;
+}
+
+#main > section:first-of-type {
+	margin-top: 0;
+	padding-top: 0;
+	border-top: 0;
+}
+
+/* Work items: keep the thumbnail and its caption locked together. */
+.work-item {
+	margin-bottom: 2.5em;
+}
+
+.work-item h3 {
+	font-size: 1.05em;
+	line-height: 1.45em;
+	margin: 0 0 0.6em 0;
+}
+
+.work-item p + p {
+	margin-top: 0.75em;
+}
+
+.work-item .image.fit img {
+	width: 100%;
+	height: auto;
+}
+
+/* Sub-headings inside the collaboration section. */
+.subhead {
+	margin: 1.5em 0 1em 0;
+	padding-bottom: 0.4em;
+	border-bottom: solid 2px #e6e6e6;
+}
+
+/* Long DOI / journal URLs must not push the layout sideways. */
+#main a {
+	overflow-wrap: break-word;
+	word-wrap: break-word;
+}
+
+/* --- 4. Visitor map ------------------------------------------------ */
+
+#clustrmaps-wrapper {
+	margin-top: 2.5em;
+	text-align: center;
+}
+
+#clustrmaps-wrapper h3 {
+	margin-bottom: 1em;
+}
+
+#clustrmaps-widget {
+	display: block;
+	margin: 0 auto;
+	max-width: 100%;
+	min-height: 60px;
+	overflow: hidden;
+}
+
+#clustrmaps-widget img,
+#clustrmaps-widget iframe,
+#clustrmaps-widget canvas,
+#clustrmaps-widget > div {
+	max-width: 100% !important;
+	margin: 0 auto;
+}
+
+.small {
+	font-size: 0.85em;
+}
