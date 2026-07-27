@@ -1,0 +1,20 @@
+/* Custom overrides: increase font size slightly and darken gray text */
+
+/* Make body text slightly larger and darker */
+body, input, select, textarea {
+	color: #666666; /* darker gray */
+	font-size: 17pt; /* slightly larger */
+}
+
+/* Make headings and strong text darker */
+h1, h2, h3, h4, h5, h6, strong, b {
+	color: #444444;
+}
+
+/* Slightly adjust heading sizes to scale better */
+h1 { font-size: 2.1em; }
+h2 { font-size: 1.6em; }
+h3 { font-size: 1.35em; }
+h4 { font-size: 1.2em; }
+h5 { font-size: 1.0em; }
+h6 { font-size: 0.85em; }
