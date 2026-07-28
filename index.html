@@ -15,7 +15,7 @@
 		     aggressively, which is how two different versions of the page
 		     end up being visible at once. Bump it whenever custom.css
 		     changes and every visitor gets the new file immediately. -->
-		<link rel="stylesheet" href="assets/css/custom.css?v=8" />
+		<link rel="stylesheet" href="assets/css/custom.css?v=9" />
 		<link rel="shortcut icon" href="/favicon.ico" />
 		<link rel="bookmark" href="/favicon.ico" />
 	</head>
@@ -173,32 +173,30 @@
 									</li>
 								</ul>
 							</div>
-						</div>
 
-						<!-- Visitor map (MapMyVisitors, the successor to ClustrMaps).
+							<!-- Visitor map (MapMyVisitors, the successor to ClustrMaps).
 
-						     Two things are going on here:
+							     Two things are going on here:
 
-						     1. The recommended JavaScript widget, inline below. It writes
-						        its output at its own position in the document, so the tag
-						        must stay in the parse stream and must NOT carry async or
-						        defer, and it must not be injected after load.
-						     2. A fallback that runs only if the widget rendered nothing
-						        (ad blockers list this domain as a tracker). It uses the
-						        plain image embed, which registers the visit just the same.
+							     1. The recommended JavaScript widget, inline below. It writes
+							        its output at its own position in the document, so the tag
+							        must stay in the parse stream and must NOT carry async or
+							        defer, and it must not be injected after load.
+							     2. A fallback that runs only if the widget rendered nothing
+							        (ad blockers list this domain as a tracker). It uses the
+							        plain image embed, which registers the visit just the same.
 
-						     The wrapper starts hidden and is revealed only once one of the
-						     two actually produces something, so the heading can never sit
-						     alone above an empty box. The widget only renders on the
-						     registered domain -- it stays blank on localhost and file://.
+							     The wrapper starts hidden and is revealed only once one of the
+							     two actually produces something, so it can never leave an empty
+							     box behind. The widget only renders on the registered domain --
+							     it stays blank on localhost and file://.
 
-						     Stats dashboard: https://mapmyvisitors.com/web/1c6x1 -->
-						<!-- Same row/column structure as a publication block, so the
-						     map lines up with the figures above by construction rather
-						     than by a hand-tuned offset (the theme's .row carries a
-						     negative grid gutter that any manual margin has to undo). -->
-						<div class="row" id="visitor-map-wrapper" hidden>
-							<div class="col-12 col-12-xsmall work-item visitor-map-item">
+							     It is a sibling column inside the contact row, so the grid
+							     gutter lines it up with the email and address lines by
+							     construction rather than by a hand-tuned offset.
+
+							     Stats dashboard: https://mapmyvisitors.com/web/1c6x1 -->
+							<div class="col-12 col-12-small" id="visitor-map-wrapper" hidden>
 								<div id="visitor-map">
 									<!-- w=1000 rather than the snippet's w=a: the width is baked
 									     into a server-generated map image, and "auto" resolves

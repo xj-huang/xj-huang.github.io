@@ -261,7 +261,7 @@ a:hover {
    strands single words on their own line. */
 #header h5 {
 	color: #ffffff;
-	font-size: 0.9em;
+	font-size: 0.95em;
 	font-weight: 400;
 	line-height: 1.5em;
 	margin: 0 0 1.15em 0;
@@ -287,8 +287,8 @@ a:hover {
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
-	width: 2.3em;
-	height: 2.3em;
+	width: 2.55em;
+	height: 2.55em;
 	border-radius: 50%;
 	border-bottom: 0;
 	background: rgba(255, 255, 255, 0.16);
@@ -300,7 +300,7 @@ a:hover {
 }
 
 #footer .icons a:before {
-	font-size: 1.15em;
+	font-size: 1.3em;
 	line-height: 1;
 }
 
@@ -408,8 +408,8 @@ a:hover {
 .work-item .image.fit img {
 	width: auto;
 	height: auto;
-	max-width: 38em;
-	max-height: 18.5em;
+	max-width: 42em;
+	max-height: 20.5em;
 	border-radius: 3px;
 }
 
@@ -488,29 +488,18 @@ a:hover {
 }
 
 /* --- 8. Visitor map ------------------------------------------------
-   Matched to the publication blocks: same indent, same width. The
-   transparent left border mirrors the accent rule on a .work-item so
-   the map's content box lines up with the figures exactly.           */
-
-/* `hidden` must beat the theme's `.row { display: flex }`, which would
-   otherwise override the UA rule and show the block regardless. */
-[hidden] {
-	display: none !important;
-}
+   The map is a sibling column in the contact row, so the grid gutter
+   already aligns its column with the labeled-icons column. The 2.25em
+   padding matches the padding on each labeled-icons li, which is what
+   puts the map's left edge exactly under the email and address text. */
 
 #visitor-map-wrapper {
-	margin-top: 2.75em;
-}
-
-/* No accent rule on the map -- it is not a publication. */
-.visitor-map-item,
-.visitor-map-item:hover {
-	border-left-color: transparent;
+	margin-top: 2.5em;
 }
 
 #visitor-map {
 	display: block;
-	width: 100%;
+	padding-left: 2.25em;
 	overflow: hidden;
 }
 
@@ -535,11 +524,11 @@ a:hover {
 	background-size: 100% 100% !important;
 }
 
+/* main.css drops the labeled-icons padding to 2em on small screens, so
+   the map has to follow to stay aligned with those lines. */
 @media screen and (max-width: 736px) {
-	#visitor-map-wrapper {
-		max-width: none;
-		margin-left: 0;
-		padding-left: 1em;
+	#visitor-map {
+		padding-left: 2em;
 	}
 }
 
@@ -552,6 +541,30 @@ a:hover {
    even then only at 50% opacity, which is easy to miss. It is now
    always visible as a solid cross, with a dark disc behind it so it
    stays legible over a light figure.                                 */
+
+/* CONSISTENT POPUP SIZE.
+
+   Poptrox sizes the popup to the image's natural size, capped at the
+   window. The full-size figures range from 683 x 355 to 15700 x 6494,
+   so one popup opened almost full-bleed while the next was a small
+   card. Forcing a target width normalises them: every figure now opens
+   at the same width, with height following its own aspect ratio and
+   capped so tall images still fit on screen.
+
+   1000px is chosen to sit near the middle of the sources, so the big
+   ones scale down (sharp) and the small ones are only mildly enlarged.
+
+   object-fit matters here: once max-height clamps a tall image, its
+   box no longer matches the image's own ratio, and without `contain`
+   the picture would be stretched to fill it. `contain` fits the
+   picture inside the box instead, so nothing is ever distorted. */
+.poptrox-popup .pic img {
+	width: 1000px !important;
+	height: auto !important;
+	max-width: 88vw !important;
+	max-height: 78vh !important;
+	object-fit: contain !important;
+}
 
 .poptrox-popup .closer {
 	opacity: 1 !important;
