@@ -15,7 +15,7 @@
 		     aggressively, which is how two different versions of the page
 		     end up being visible at once. Bump it whenever custom.css
 		     changes and every visitor gets the new file immediately. -->
-		<link rel="stylesheet" href="assets/css/custom.css?v=6" />
+		<link rel="stylesheet" href="assets/css/custom.css?v=7" />
 		<link rel="shortcut icon" href="/favicon.ico" />
 		<link rel="bookmark" href="/favicon.ico" />
 	</head>
@@ -201,11 +201,12 @@
 						<div class="row" id="visitor-map-wrapper" hidden>
 							<div class="col-12 col-12-xsmall work-item visitor-map-item">
 								<div id="visitor-map">
-									<!-- w=600 rather than the snippet's w=a: the width is baked
-									     into a server-generated map image, and "auto" resolves to
-									     a 100px-wide one. 600 matches the figures above; the CSS
-									     scales it down on narrower screens. -->
-									<script type="text/javascript" id="mapmyvisitors" src="https://mapmyvisitors.com/map.js?d=ECO1_BsX4_3m2g7UzZTfS9gEN_ufvAprImCz-sCPHks&amp;cl=ffffff&amp;w=600"></script>
+									<!-- w=1000 rather than the snippet's w=a: the width is baked
+									     into a server-generated map image, and "auto" resolves
+									     to a 100px-wide one. 1000 is wider than the block ever
+									     gets, so the CSS only ever scales it down, which stays
+									     sharp. -->
+									<script type="text/javascript" id="mapmyvisitors" src="https://mapmyvisitors.com/map.js?d=ECO1_BsX4_3m2g7UzZTfS9gEN_ufvAprImCz-sCPHks&amp;cl=ffffff&amp;w=1000"></script>
 								</div>
 							</div>
 						</div>
