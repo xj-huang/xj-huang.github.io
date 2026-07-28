@@ -98,8 +98,14 @@
 		// Lightbox gallery.
 			$window.on('load', function() {
 
-				$('#two').poptrox({
-					caption: function($a) { return $a.next('h3').text(); },
+				// Bound to #main, not #two: the research sections have unique
+				// ids now (#research-1 ... #research-4), so #two matched
+				// nothing and the lightbox never initialised -- clicking a
+				// figure just opened the raw image with no way back.
+				// The caption reads .prev() because the heading now comes
+				// before the figure in each entry.
+				$('#main').poptrox({
+					caption: function($a) { return $a.prev('h3').text(); },
 					overlayColor: '#2c2c2c',
 					overlayOpacity: 0.85,
 					popupCloserText: '',

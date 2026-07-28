@@ -117,13 +117,13 @@ a:hover {
 
 @media screen and (min-width: 1281px) {
 	#header {
-		width: 23%;
+		width: 25%;
 		padding: 3.5em 2em;
 	}
 
 	#main {
-		margin-left: 23%;
-		width: calc(100% - 23%);
+		margin-left: 25%;
+		width: calc(100% - 25%);
 		max-width: 76em;
 		padding: 4.5em 4em 4em 4.5em;
 	}
@@ -131,13 +131,13 @@ a:hover {
 
 @media screen and (min-width: 981px) and (max-width: 1280px) {
 	#header {
-		width: 26%;
+		width: 28%;
 		padding: 3em 1.5em;
 	}
 
 	#main {
-		margin-left: 26%;
-		width: calc(100% - 26%);
+		margin-left: 28%;
+		width: calc(100% - 28%);
 		max-width: none;
 		padding: 4em 3em;
 	}
@@ -156,14 +156,10 @@ a:hover {
 }
 
 /* --- 5. Sidebar ----------------------------------------------------
-   bg.jpg is 582x867. The theme sizes it at `150%` of the sidebar
-   width, which works out to roughly 740px tall in a 900px-high
-   window, leaving a band of the #1f1815 base color -- read as black --
-   across the bottom of the column, behind the social icons. `cover`
-   scales it to fill the sidebar at any window height.
-
-   A light wash on top takes the photo down a touch and seats the
-   text; a text shadow does the rest, so no heavy scrim is needed.    */
+   A light wash over the photo takes it down a touch and seats the
+   white text; a text shadow does the rest, so no heavy scrim is
+   needed. See the note further down for why the photo itself is
+   painted on a fixed layer on the side-by-side layout.               */
 
 #header {
 	background-size: auto, cover;
@@ -224,13 +220,13 @@ a:hover {
 
 @media screen and (min-width: 1281px) {
 	#header:before {
-		width: 23%;
+		width: 25%;
 	}
 }
 
 @media screen and (min-width: 981px) and (max-width: 1280px) {
 	#header:before {
-		width: 26%;
+		width: 28%;
 	}
 }
 
@@ -412,8 +408,8 @@ a:hover {
 .work-item .image.fit img {
 	width: auto;
 	height: auto;
-	max-width: 34em;
-	max-height: 16.5em;
+	max-width: 38em;
+	max-height: 18.5em;
 	border-radius: 3px;
 }
 
@@ -545,4 +541,38 @@ a:hover {
 		margin-left: 0;
 		padding-left: 1em;
 	}
+}
+
+/* --- 9. Lightbox ---------------------------------------------------
+   Clicking a figure opens it in the poptrox lightbox (see main.js,
+   which had to be repointed at #main -- it was bound to a #two that
+   no longer exists, so no lightbox was opening at all).
+
+   The theme hides the close button until you hover the popup, and
+   even then only at 50% opacity, which is easy to miss. It is now
+   always visible as a solid cross, with a dark disc behind it so it
+   stays legible over a light figure.                                 */
+
+.poptrox-popup .closer {
+	opacity: 1 !important;
+	color: #ffffff;
+	z-index: 10;
+}
+
+.poptrox-popup .closer:before {
+	background-color: rgba(20, 20, 20, 0.65);
+	border: solid 3px rgba(255, 255, 255, 0.9);
+	-moz-transition: background-color 0.2s ease-in-out;
+	-webkit-transition: background-color 0.2s ease-in-out;
+	transition: background-color 0.2s ease-in-out;
+}
+
+.poptrox-popup .closer:hover:before {
+	background-color: rgba(200, 40, 40, 0.9);
+}
+
+/* Give the caption room and keep it readable. */
+.poptrox-popup .caption {
+	font-size: 0.95em;
+	line-height: 1.5em;
 }
