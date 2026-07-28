@@ -118,24 +118,9 @@
 					windowMargin: (breakpoints.active('<=small') ? 0 : 50)
 				});
 
-				// The profile photo is a plain link to the full image, so
-				// clicking it navigated away with no way back. Give it the
-				// same lightbox (and therefore the same close button) as the
-				// figures. Separate call because it lives in #header and has
-				// no heading to caption from.
-				$('#header').poptrox({
-					caption: function($a) { return $a.find('img').attr('alt') || ''; },
-					overlayColor: '#2c2c2c',
-					overlayOpacity: 0.85,
-					popupCloserText: '',
-					popupLoaderText: '',
-					selector: 'a.image.avatar',
-					usePopupCaption: true,
-					usePopupDefaultStyling: false,
-					usePopupEasyClose: false,
-					usePopupNav: false,
-					windowMargin: (breakpoints.active('<=small') ? 0 : 50)
-				});
+				// The profile photo is deliberately not in the lightbox: it is
+				// a plain <span> in the markup, not a link, so it does not
+				// zoom and cannot be clicked through to the full image.
 
 			});
 

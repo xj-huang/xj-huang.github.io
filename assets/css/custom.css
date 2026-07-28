@@ -51,21 +51,21 @@ body, input, select, textarea {
 /* Desktop and laptop */
 @media screen and (min-width: 981px) {
 	#main h2 { font-size: 1.6em; }
-	.work-item h3 { font-size: 1.35em; }
+	.work-item h3 { font-size: 1.12em; }
 	.subhead { font-size: 1.2em; }
 }
 
 /* Tablet */
 @media screen and (min-width: 737px) and (max-width: 980px) {
 	#main h2 { font-size: 1.45em; }
-	.work-item h3 { font-size: 1.25em; }
+	.work-item h3 { font-size: 1.1em; }
 	.subhead { font-size: 1.15em; }
 }
 
 /* Phone */
 @media screen and (max-width: 736px) {
 	#main h2 { font-size: 1.35em; }
-	.work-item h3 { font-size: 1.18em; }
+	.work-item h3 { font-size: 1.08em; }
 	.subhead { font-size: 1.1em; }
 }
 
@@ -117,13 +117,13 @@ a:hover {
 
 @media screen and (min-width: 1281px) {
 	#header {
-		width: 25%;
+		width: 30%;
 		padding: 3.5em 2em;
 	}
 
 	#main {
-		margin-left: 25%;
-		width: calc(100% - 25%);
+		margin-left: 30%;
+		width: calc(100% - 30%);
 		max-width: 76em;
 		padding: 4.5em 4em 4em 4.5em;
 	}
@@ -131,13 +131,13 @@ a:hover {
 
 @media screen and (min-width: 981px) and (max-width: 1280px) {
 	#header {
-		width: 28%;
+		width: 33.6%;
 		padding: 3em 1.5em;
 	}
 
 	#main {
-		margin-left: 28%;
-		width: calc(100% - 28%);
+		margin-left: 33.6%;
+		width: calc(100% - 33.6%);
 		max-width: none;
 		padding: 4em 3em;
 	}
@@ -220,13 +220,13 @@ a:hover {
 
 @media screen and (min-width: 1281px) {
 	#header:before {
-		width: 25%;
+		width: 30%;
 	}
 }
 
 @media screen and (min-width: 981px) and (max-width: 1280px) {
 	#header:before {
-		width: 28%;
+		width: 33.6%;
 	}
 }
 
@@ -405,10 +405,18 @@ a:hover {
 	line-height: 0;
 }
 
+/* The 46vw half of this cap is load-bearing, not decoration. The
+   anchor shrink-wraps the image, so a percentage max-width on the
+   image would resolve against a width that depends on the image
+   itself. Without a viewport-relative cap the widest figures pushed
+   past the right edge of the window once the sidebar took 30% --
+   42em is simply wider than the content column on a 1250-1400px
+   screen. 46vw always fits, and 42em still wins on large monitors. */
 .work-item .image.fit img {
 	width: auto;
 	height: auto;
 	max-width: 42em;
+	max-width: min(42em, 46vw);
 	max-height: 20.5em;
 	border-radius: 3px;
 }
@@ -437,7 +445,10 @@ a:hover {
 }
 
 .work-item .conference,
-.work-item .media,
+.work-item .media {
+	color: #6d6d6d;
+}
+
 .note {
 	font-size: 0.92em;
 	color: #6d6d6d;
@@ -488,10 +499,13 @@ a:hover {
 }
 
 /* --- 8. Visitor map ------------------------------------------------
-   The map is a sibling column in the contact row, so the grid gutter
-   already aligns its column with the labeled-icons column. The 2.25em
-   padding matches the padding on each labeled-icons li, which is what
-   puts the map's left edge exactly under the email and address text. */
+   A single server-rendered image, so it scales with plain CSS and the
+   markers stay put. (The JavaScript widget drew its markers as a
+   vector overlay that did not line up with its own raster background
+   -- the dots landed in the ocean.)
+
+   Sitting flush with the left edge of the contact column, a step
+   further left than the email and address text.                      */
 
 #visitor-map-wrapper {
 	margin-top: 2.5em;
@@ -499,37 +513,18 @@ a:hover {
 
 #visitor-map {
 	display: block;
-	padding-left: 2.25em;
-	overflow: hidden;
 }
 
 #visitor-map a {
 	display: block;
 	border-bottom: 0;
+	max-width: 800px;
 }
 
-/* The widget hard-codes its width inline, so these need !important.
-   The map itself is a background image on a fixed-size div; giving it
-   an aspect ratio lets it scale with the column instead of distorting.
-   2.04 is the generated image's ratio (1000 x 490). */
-#visitor-map #mapmyvisitors-widget {
-	width: 100% !important;
-	max-width: 1000px;
-}
-
-#visitor-map .mapmyvisitors-map {
-	width: 100% !important;
-	height: auto !important;
-	aspect-ratio: 2.04;
-	background-size: 100% 100% !important;
-}
-
-/* main.css drops the labeled-icons padding to 2em on small screens, so
-   the map has to follow to stay aligned with those lines. */
-@media screen and (max-width: 736px) {
-	#visitor-map {
-		padding-left: 2em;
-	}
+#visitor-map img {
+	display: block;
+	width: 100%;
+	height: auto;
 }
 
 /* --- 9. Lightbox ---------------------------------------------------
